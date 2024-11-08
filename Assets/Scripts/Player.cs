@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public GameObject bullet;
     private int lives;
 
+    private GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,9 @@ public class Player : MonoBehaviour
         horizontalScreenLimit = 11.5f;
         verticalScreenLimit = 7.5f;
         lives = 3;
+
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.SetLivesCount(lives);
     }
 
     // Update is called once per frame
@@ -60,6 +65,7 @@ public class Player : MonoBehaviour
         //lives = lives - 1;
         //lives -= 1;
         lives--;
+        gameManager.SetLivesCount(lives);
         if (lives == 0)
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
