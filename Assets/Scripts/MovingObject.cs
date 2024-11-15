@@ -6,11 +6,12 @@ public class MovingObject : MonoBehaviour
 {
 
     public int myType;
+    float randomValueMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        randomValueMovement = Random.Range(-1f, 1f);
     }
 
     // Update is called once per frame
@@ -31,6 +32,11 @@ public class MovingObject : MonoBehaviour
         {
             //I am a coin
             transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * Random.Range(2f, 5f));
+        }
+        else if (myType == 5)
+        {
+            //I am an enemy2
+            transform.Translate(new Vector3(randomValueMovement, -1, 0) * Time.deltaTime * 3f);
         }
 
         if ((transform.position.y > 9f ||  transform.position.y <= -9f) && myType != 3)
