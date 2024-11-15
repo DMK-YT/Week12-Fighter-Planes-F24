@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public GameObject enemy;
+    public GameObject enemyTwo;
     public GameObject cloud;
     private int score;
     public GameObject coin;
@@ -20,7 +21,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Instantiate(player, transform.position, Quaternion.identity);
-        InvokeRepeating("CreateEnemy", 1f, 3f);
+        InvokeRepeating("CreateEnemy", 1f, 3f); 
+        InvokeRepeating("CreateEnemyTwo", 4f, 8f);
         CreateSky();
         InvokeRepeating("CreateCoin", 5f, 10f);
         score = 0;
@@ -36,6 +38,10 @@ public class GameManager : MonoBehaviour
     void CreateEnemy()
     {
         Instantiate(enemy, new Vector3(Random.Range(-9f, 9f), 7.5f, 0), Quaternion.identity);
+    }
+    void CreateEnemyTwo()
+    {
+        Instantiate(enemyTwo, new Vector3(Random.Range(-5f, 5f), 8f, 0), Quaternion.identity);
     }
 
     void CreateSky()
