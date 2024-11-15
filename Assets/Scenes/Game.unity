@@ -512,6 +512,7 @@ MonoBehaviour:
   player: {fileID: 686374417973811733, guid: 2ed714d4b68ffc94ebf8ddaa9e7d565d, type: 3}
   enemy: {fileID: 4581836376663872257, guid: 3fcd728be90940d4ba14f8ae7a6b7a89, type: 3}
   cloud: {fileID: 4470962046418527370, guid: 7a5475a3f727072489cb7e9cd0c70787, type: 3}
+  coin: {fileID: 3325511888514042579, guid: 25eacfe204da70c4eaf2aab0e3996e87, type: 3}
   scoreText: {fileID: 2035294179}
   livesText: {fileID: 2146793950}
 --- !u!4 &1725268741

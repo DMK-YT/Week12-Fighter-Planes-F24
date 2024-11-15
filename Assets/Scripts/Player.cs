@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     {
         speed = 6f;
         horizontalScreenLimit = 11.5f;
-        verticalScreenLimit = 7.5f;
+        verticalScreenLimit = 4f;
         lives = 3;
 
         gameManager = FindObjectOfType<GameManager>();
@@ -39,17 +39,25 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed);
-        if (transform.position.x > horizontalScreenLimit || transform.position.x <= -horizontalScreenLimit)
+        horizontalInput = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+        verticalInput = Input.GetAxis("Vertical") * Time.deltaTime * speed; 
+        
+        transform.position = new Vector3(transform.position.x + horizontalInput,
+             Mathf.Clamp(transform.position.y + verticalInput, -verticalScreenLimit, 0));
+
+        if (transform.position.x > horizontalScreenLimit)
         {
-            transform.position = new Vector3(transform.position.x * -1, transform.position.y, 0);
+            transform.position = new Vector3(horizontalScreenLimit * -1, transform.position.y, 0);
         }
+        else if (transform.position.x < -horizontalScreenLimit) 
+        {
+            transform.position = new Vector3(horizontalScreenLimit, transform.position.y, 0);
+        }
+        /*
         if (transform.position.y > verticalScreenLimit || transform.position.y <= -verticalScreenLimit)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y * -1, 0);
-        }
+        }*/
     }
 
     void Shooting()
