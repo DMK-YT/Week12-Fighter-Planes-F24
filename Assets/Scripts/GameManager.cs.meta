@@ -3,7 +3,12 @@ guid: 7f5ce750b4b56ea4caf469164c21ae56
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player: {fileID: 686374417973811733, guid: 2ed714d4b68ffc94ebf8ddaa9e7d565d, type: 3}
+  - enemy: {instanceID: 0}
+  - cloud: {instanceID: 0}
+  - coin: {instanceID: 0}
+  - scoreText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

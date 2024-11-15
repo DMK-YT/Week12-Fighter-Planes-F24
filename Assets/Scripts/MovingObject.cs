@@ -27,6 +27,10 @@ public class MovingObject : MonoBehaviour
         {
             //I am a cloud
             transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * Random.Range(2f, 6f));
+        } else if (myType == 4)
+        {
+            //I am a coin
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * Random.Range(2f, 5f));
         }
 
         if ((transform.position.y > 9f ||  transform.position.y <= -9f) && myType != 3)
