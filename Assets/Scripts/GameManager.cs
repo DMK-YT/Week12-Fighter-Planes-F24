@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void CreateEnemy()
@@ -46,14 +46,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void EarnScore(int howMuch) 
-    {  
+    public void EarnScore(int howMuch)
+    {
         score = score + howMuch;
         scoreText.text = "Score: " + score;
     }
     public void SetLivesCount(int lives)
     {
         livesText.text = "Lives: " + lives;
+    }
 
     void CreateCoin()
     {
