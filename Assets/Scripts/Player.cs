@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit;
     private float verticalScreenLimit;
 
+    public GameObject shield;
     public GameObject thruster;
     public GameObject explosion;
     public GameObject bullet;
@@ -93,8 +94,8 @@ public class Player : MonoBehaviour
         }
         else if (hasShield == true)
         {
-            //lose the shield
-            //no longer have a shield
+            shield.SetActive(false);
+            hasShield = false;
         }
 
         if (lives == 0)
@@ -150,7 +151,8 @@ public class Player : MonoBehaviour
                 case 4:
                     //shield
                     gameManager.UpdatePowerupText("Picked up Shield!");
-                    hasShield = true;
+                    hasShield = true; 
+                    shield.SetActive(true);
                     break;
             }
             Destroy(whatIHit.gameObject);

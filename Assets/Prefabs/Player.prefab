@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fa58d16c4fab7d479bf38dfaa1da635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shield: {fileID: 3879274724158994464}
   thruster: {fileID: 2926155711108525335}
   explosion: {fileID: 4910536062124653743, guid: 2d5a9c6137b0b984081abc4ff3157b0e, type: 3}
   bullet: {fileID: 4733981234398038366, guid: 4dea0cfd33aea984c8f1a75c838e3848, type: 3}
