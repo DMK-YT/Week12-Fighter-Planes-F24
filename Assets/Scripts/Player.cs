@@ -8,33 +8,27 @@ public class Player : MonoBehaviour
 
     private float horizontalInput;
     private float verticalInput;
+    private float horizontalScreenSize = 11.5f;
+    private float verticalScreenSize = 7.5f;
     private float speed;
-    private float horizontalScreenLimit;
-    private float verticalScreenLimit;
-
-    public GameObject thruster;
-    public GameObject explosion;
-    public GameObject bullet;
-
     private int lives;
     private int shooting;
     private bool hasShield;
 
-    private GameManager gameManager;
+    public GameManager gameManager;
+
+    public GameObject bullet;
+    public GameObject explosion;
+    public GameObject thruster;
 
     // Start is called before the first frame update
     void Start()
     {
         speed = 6f;
-        horizontalScreenLimit = 11.5f;
-        verticalScreenLimit = 4f;
-
         lives = 3;
         shooting = 1;
         hasShield = false;
-
-        gameManager = FindObjectOfType<GameManager>();
-        gameManager.SetLivesCount(lives);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -46,25 +40,22 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        horizontalInput = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        verticalInput = Input.GetAxis("Vertical") * Time.deltaTime * speed; 
-        
-        transform.position = new Vector3(transform.position.x + horizontalInput,
-             Mathf.Clamp(transform.position.y + verticalInput, -verticalScreenLimit, 0));
-
-        if (transform.position.x > horizontalScreenLimit)
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        transform.Translate(new Vector3(horizontalInput, verticalInput,0) * Time.deltaTime * speed);
+        if (transform.position.x > horizontalScreenSize || transform.position.x <= -horizontalScreenSize)
         {
-            transform.position = new Vector3(horizontalScreenLimit * -1, transform.position.y, 0);
+            transform.position = new Vector3(transform.position.x * -1, transform.position.y, 0);
         }
-        else if (transform.position.x < -horizontalScreenLimit) 
+        if (transform.position.y > verticalScreenSize || transform.position.y < -verticalScreenSize)
         {
-            transform.position = new Vector3(horizontalScreenLimit, transform.position.y, 0);
+            transform.position = new Vector3(transform.position.x, transform.position.y * -1, 0);
         }
     }
 
     void Shooting()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             switch (shooting)
             {
@@ -76,7 +67,7 @@ public class Player : MonoBehaviour
                     Instantiate(bullet, transform.position + new Vector3(0.5f, 1, 0), Quaternion.identity);
                     break;
                 case 3:
-                    Instantiate(bullet, transform.position + new Vector3(-0.5f, 1, 0), Quaternion.Euler(0, 0, 30f));
+                    Instantiate(bullet, transform.position + new Vector3(-0.5f, 1, 0), Quaternion.Euler(0, 0, 30f)); 
                     Instantiate(bullet, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                     Instantiate(bullet, transform.position + new Vector3(0.5f, 1, 0), Quaternion.Euler(0, 0, -30f));
                     break;
@@ -89,12 +80,11 @@ public class Player : MonoBehaviour
         if (hasShield == false)
         {
             lives--;
-            gameManager.SetLivesCount(lives);
-        }
-        else if (hasShield == true)
+        } else if (hasShield == true)
         {
             //lose the shield
             //no longer have a shield
+            gameManager.PlayPowerDown();
         }
 
         if (lives == 0)
@@ -111,6 +101,7 @@ public class Player : MonoBehaviour
         speed = 6f;
         thruster.gameObject.SetActive(false);
         gameManager.UpdatePowerupText("");
+        gameManager.PlayPowerDown();
     }
 
     IEnumerator ShootingPowerDown()
@@ -118,28 +109,29 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3f);
         shooting = 1;
         gameManager.UpdatePowerupText("");
+        gameManager.PlayPowerDown();
     }
 
     private void OnTriggerEnter2D(Collider2D whatIHit)
     {
-        if (whatIHit.tag == "Powerup")
+        if(whatIHit.tag == "Powerup")
         {
             gameManager.PlayPowerUp();
             int powerupType = Random.Range(1, 5); //this can be 1, 2, 3, or 4
-            switch (powerupType)
+            switch(powerupType)
             {
                 case 1:
                     //speed powerup
                     speed = 9f;
                     gameManager.UpdatePowerupText("Picked up Speed!");
                     thruster.gameObject.SetActive(true);
-                    StartCoroutine(SpeedPowerDown());
+                    StartCoroutine(SpeedPowerDown());                
                     break;
                 case 2:
                     //double shot
                     shooting = 2;
                     gameManager.UpdatePowerupText("Picked up Double Shot!");
-                    StartCoroutine(ShootingPowerDown());
+                    StartCoroutine (ShootingPowerDown());
                     break;
                 case 3:
                     //triple shot
